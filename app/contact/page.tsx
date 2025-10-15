@@ -26,12 +26,12 @@ type FormSchema = z.infer<typeof schema>;
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { 
-    register, 
-    handleSubmit, 
+  const {
+    register,
+    handleSubmit,
     setValue,
     reset,
-    formState: { errors } 
+    formState: { errors },
   } = useForm<FormSchema>({
     resolver: zodResolver(schema),
   });
@@ -40,8 +40,8 @@ export default function ContactPage() {
     setIsSubmitting(true);
     try {
       // In a real app, this would send to your backend
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      toast.success("Message sent successfully! We'll get back to you soon.");
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      toast.success("Message sent successfully! We&apos;ll get back to you soon.");
       reset();
     } catch (error) {
       toast.error("Failed to send message. Please try again.");
@@ -55,7 +55,7 @@ export default function ContactPage() {
       <div className="text-center space-y-3 sm:space-y-4 mb-8 sm:mb-12">
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">Contact Us</h1>
         <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto px-2">
-          Have a story tip, feedback, or question? We'd love to hear from you. Get in touch with our team.
+          Have a story tip, feedback, or question? We&apos;d love to hear from you. Get in touch with our team.
         </p>
       </div>
 
@@ -105,7 +105,7 @@ export default function ContactPage() {
                     <Label htmlFor="subject">Subject</Label>
                     <Input
                       id="subject"
-                      placeholder="What's this about?"
+                      placeholder="What&apos;s this about?"
                       {...register("subject")}
                       className={errors.subject ? "border-red-500" : ""}
                     />
@@ -202,7 +202,7 @@ export default function ContactPage() {
                 <p className="text-xs sm:text-sm text-muted-foreground break-all">editorial@thecommonvoice.com</p>
               </div>
               <div>
-                <p className="font-medium text-sm sm:text-base">Tips & Leads</p>
+                <p className="font-medium text-sm sm:text-base">Tips &amp; Leads</p>
                 <p className="text-xs sm:text-sm text-muted-foreground break-all">tips@thecommonvoice.com</p>
               </div>
               <div>
