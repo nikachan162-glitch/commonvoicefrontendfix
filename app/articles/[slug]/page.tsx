@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { AdSlot } from "@/components/AdSlot";
 import Link from "next/link";
+import Image from 'next/image';
 
 // --- Fetch Single Article ---
 async function getArticle(slug: string): Promise<Article | null> {
@@ -181,14 +182,14 @@ export default async function ArticlePage({
 
           {/* Featured Image */}
           {article.coverImage && (
-            <div className="relative aspect-video overflow-hidden rounded-xl">
-              <img
-                src={article.coverImage}
-                alt={article.title}
-                className="h-full w-full object-cover"
-                loading="lazy"
-              />
-            </div>
+            <Image
+              src={article.coverImage}
+              alt={article.title}
+              width={1200}
+              height={630}
+              className="w-full h-auto rounded-lg"
+              priority
+            />
           )}
 
           {/* Content */}

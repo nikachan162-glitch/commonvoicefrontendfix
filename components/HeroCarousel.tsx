@@ -34,14 +34,14 @@ export function HeroCarousel({ articles }: HeroCarouselProps) {
   };
 
   return (
-    <section className="relative mb-8">
+    <div className="carousel relative mb-8">
       <div className="relative overflow-hidden rounded-xl">
         <div
           className="flex transition-transform duration-500 ease-in-out"
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
-          {featuredArticles.map((article, index) => (
-            <div key={article.id} className="w-full flex-shrink-0">
+          {featuredArticles.map((article) => (
+            <div key={article.id} className="w-full flex-shrink-0 carousel-item">
               <ArticleCard article={article} variant="featured" show={false} />
             </div>
           ))}
@@ -81,6 +81,6 @@ export function HeroCarousel({ articles }: HeroCarouselProps) {
           ))}
         </div>
       </div>
-    </section>
+    </div>
   );
 }

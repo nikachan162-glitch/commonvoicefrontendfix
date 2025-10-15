@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 interface RecommendedItem {
@@ -23,10 +24,12 @@ export function RecommendedWidget({ items }: RecommendedWidgetProps) {
         {items.map((item, idx) => (
           <Link key={idx} href={item.link} className="flex gap-3 hover:underline">
             {item.image && (
-              <img
+              <Image
                 src={item.image}
                 alt={item.title}
-                className="w-16 h-16 object-cover rounded"
+                width={100}
+                height={100}
+                className="w-full h-20 object-cover"
               />
             )}
             <p className="text-sm">{item.title}</p>

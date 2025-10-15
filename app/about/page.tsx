@@ -82,6 +82,7 @@ export default function AboutPage() {
           Have a story tip or feedback? We'd love to hear from you. Reach out to our editorial team at <a href="mailto:editorial@thecommonvoice.com">editorial@thecommonvoice.com</a>.
         </p>
       </div>
+      <p>Here&apos;s what sets us apart...</p>
     </div>
   );
 }

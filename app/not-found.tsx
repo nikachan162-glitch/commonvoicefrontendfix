@@ -15,7 +15,7 @@ export default function NotFound() {
         </CardHeader>
         <CardContent className="space-y-4 text-center">
           <p className="text-muted-foreground">
-            The page you're looking for doesn't exist. It may have been moved, deleted, or you entered the wrong URL.
+            We couldn&apos;t find what you&apos;re looking for.
           </p>
           <div className="flex flex-col sm:flex-row gap-2">
             <Button asChild variant="outline">

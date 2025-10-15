@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function UnauthorizedPage() {
   return (
-    <div className="container mx-auto px-4 py-12 max-w-md">
+    <div className="container mx-auto px-4 py-8">
       <Card>
         <CardHeader className="text-center">
           <div className="mx-auto mb-4 h-12 w-12 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center">
@@ -14,9 +14,7 @@ export default function UnauthorizedPage() {
           <CardTitle className="text-2xl">Access Denied</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4 text-center">
-          <p className="text-muted-foreground">
-            You don't have permission to access this resource. Please contact an administrator if you believe this is an error.
-          </p>
+          <p>You don&apos;t have permission to access this page.</p>
           <Button asChild>
             <Link href="/">
               <ArrowLeft className="h-4 w-4 mr-2" />

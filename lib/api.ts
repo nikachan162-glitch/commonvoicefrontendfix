@@ -1,5 +1,4 @@
 import axios from "axios";
-import { toast } from "sonner";
 
 export const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000/api",
@@ -29,13 +28,11 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     if (error.response?.status === 401) {
-      // Try to refresh token
       try {
         await api.post("/auth/refresh");
-        // Retry the original request
         return api(error.config);
-      } catch (refreshError) {
-        toast.error("Session expired. Please log in again.");
+      } catch (err) {
+        console.error("Token refresh failed:", err);
         window.location.href = "/login";
       }
     }

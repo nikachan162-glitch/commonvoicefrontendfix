@@ -40,6 +40,13 @@ type ArticlesResponse = {
   publishedTodayCount: number;
 };
 
+// type for dashboard stats
+type DashboardStats = {
+  userCount: number;
+  articleCount: number;
+  publishedToday: number;
+};
+
 export default function AdminDashboard() {
   // User state
   const [users, setUsers] = useState<User[]>([]);
@@ -61,9 +68,10 @@ export default function AdminDashboard() {
 
   // Stats
   const [statsLoading, setStatsLoading] = useState(true);
-  const [userCount, setUserCount] = useState(0);
-  const [articleCount, setArticleCount] = useState(0);
-  const [publishedToday, setPublishedToday] = useState(0);
+  const [stats, setStats] = useState<DashboardStats | null>(null);
+
+  // combined loading state
+  const isLoading = statsLoading || userLoading || articleLoading;
 
   // Fetch users
   useEffect(() => {
@@ -77,7 +85,6 @@ export default function AdminDashboard() {
         );
         setUsers(data?.users);
         setUserTotalPages(data?.pagination.totalPages);
-        setUserCount(data?.pagination?.total);
       } catch {
         toast.error("Failed to load users");
       } finally {
@@ -100,8 +107,6 @@ export default function AdminDashboard() {
         );
         setArticles(data?.articles);
         setArticleTotalPages(data?.totalPages);
-        setArticleCount(data?.total);
-        setPublishedToday(data?.publishedTodayCount || 0);
       } catch {
         toast.error("Failed to load articles");
       } finally {
@@ -112,13 +117,13 @@ export default function AdminDashboard() {
     fetchArticles();
   }, [articlePage, articleSearch]);
 
-  // Remove setUsers/setArticles from stats fetch!
+  // Fetch stats
   useEffect(() => {
     const fetchStats = async () => {
       setStatsLoading(true);
       try {
-        // Optionally, you can fetch counts here if your API supports it
-        // But don't overwrite users/articles state!
+        const { data } = await api.get(`/admin/stats`);
+        setStats(data);
       } catch {
         // Silently fail
       } finally {
@@ -236,7 +241,9 @@ export default function AdminDashboard() {
               <CardTitle className="text-sm font-medium">Total Users</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{userCount}</div>
+              <div className="text-2xl font-bold">
+                {isLoading ? "..." : stats?.userCount}
+              </div>
             </CardContent>
           </Card>
           <Card>
@@ -246,7 +253,9 @@ export default function AdminDashboard() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{articleCount}</div>
+              <div className="text-2xl font-bold">
+                {isLoading ? "..." : stats?.articleCount}
+              </div>
             </CardContent>
           </Card>
           <Card>
@@ -256,7 +265,9 @@ export default function AdminDashboard() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{publishedToday}</div>
+              <div className="text-2xl font-bold">
+                {isLoading ? "..." : stats?.publishedToday}
+              </div>
             </CardContent>
           </Card>
           <Card>

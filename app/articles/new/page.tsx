@@ -12,6 +12,7 @@ import { Category, VideoData } from "@/lib/types";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import { useUserStore } from "@/store/useUserStore";
 import { VideoSection } from '@/components/VideoSection';
+import Image from 'next/image';
 
 const CLOUDINARY_UPLOAD_URL = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
 
@@ -226,6 +227,33 @@ export default function NewArticlePage() {
             {loading ? "Creating..." : "Create Article"}
           </Button>
         </form>
+
+        {/* Preview Section */}
+        {coverImage && (
+          <div className="mt-8">
+            <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 dark:text-white mb-4">Article Preview</h2>
+            <div className="bg-gray-100 dark:bg-gray-900 p-4 sm:p-6 rounded-lg shadow-md">
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-white mb-3">{title}</h3>
+              <div className="mb-4">
+                <Image
+                  src={coverImage}
+                  alt="Article preview"
+                  width={800}
+                  height={400}
+                  className="w-full h-auto rounded-lg object-cover"
+                  priority
+                />
+              </div>
+              <div className="prose max-w-none">
+                <Textarea
+                  value={content}
+                  readOnly
+                  className="resize-none border-0 focus:ring-0 focus:outline-none h-auto"
+                />
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </ProtectedRoute>
   );

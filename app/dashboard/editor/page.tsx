@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import RequireAuth from "@/components/RequireAuth";
 import { api } from "@/lib/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -33,11 +33,7 @@ export default function EditorDashboard() {
   const [articleCount, setArticleCount] = useState(0);
   const [publishedToday, setPublishedToday] = useState(0);
 
-  useEffect(() => {
-    fetchArticles();
-  }, [articlePage, articleSearch]);
-
-  const fetchArticles = async () => {
+  const fetchArticles = useCallback(async () => {
     setArticleLoading(true);
     try {
       const { data }: { data: ArticlesResponse } = await api.get(
@@ -53,7 +49,11 @@ export default function EditorDashboard() {
     } finally {
       setArticleLoading(false);
     }
-  };
+  }, [articlePage, articleLimit, articleSearch]);
+
+  useEffect(() => {
+    fetchArticles();
+  }, [fetchArticles]);
 
   const handleArticleSearch = () => {
     setArticlePage(1);

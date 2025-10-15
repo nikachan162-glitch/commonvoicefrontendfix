@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { X, Edit, Trash2 } from "lucide-react";
 import { Button } from "./ui/button";
 // import { Input } from "./ui/input";
@@ -26,16 +26,19 @@ export function CommentsSidebar({ articleId, onClose }: CommentsSidebarProps) {
   const [newComment, setNewComment] = useState("");
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const [editingContent, setEditingContent] = useState("");
+  const [loading, setLoading] = useState(true);
   const { user } = useUserStore();
 
-  const fetchComments = async () => {
+  const fetchComments = useCallback(async () => {
     try {
-      const res = await api.get(`comments/${articleId}`);
-      setComments(res.data.comments || []);
-    } catch (error) {
-      console.error("Error fetching comments:", error);
+      const { data } = await api.get(`/comments/${articleId}`);
+      setComments(data.comments);
+    } catch (err) {
+      console.error("Failed to fetch comments:", err);
+    } finally {
+      setLoading(false);
     }
-  };
+  }, [articleId]);
 
   const postComment = async () => {
     if (!user) {
@@ -80,7 +83,7 @@ export function CommentsSidebar({ articleId, onClose }: CommentsSidebarProps) {
 
   useEffect(() => {
     fetchComments();
-  }, [articleId]);
+  }, [fetchComments]);
 
   return (
     <div className="fixed inset-0 bg-black/40 flex justify-end z-50">

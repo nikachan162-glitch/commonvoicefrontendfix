@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link";
-import { formatDistanceToNow, set } from "date-fns";
+import { formatDistanceToNow } from "date-fns";
 import type { Article } from "@/lib/types";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import { toast } from "sonner";
 import { CommentsSidebar } from "@/components/CommentSidebar";
+import Image from 'next/image';
 
 interface ArticleCardProps {
   article: Article;
@@ -87,10 +88,13 @@ export function ArticleCard({ article, variant = "default", show = true }: Artic
           >
             {article.coverImage ? (
               <>
-                <img
+                <Image
                   src={article.coverImage}
                   alt={article.title}
-                  className="h-full w-full object-cover transform transition-transform duration-500 group-hover:scale-105"
+                  width={400}
+                  height={225}
+                  className="w-full h-48 object-cover rounded-t-lg"
+                  priority={true}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
               </>

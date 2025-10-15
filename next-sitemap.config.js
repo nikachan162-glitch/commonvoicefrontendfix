@@ -4,7 +4,7 @@ module.exports = {
   generateRobotsTxt: true,
   exclude: ['/dashboard/*', '/unauthorized'],
   generateIndexSitemap: false,
-  transform: async (config, path) => {
+  transform: async ( path) => {
     return {
       loc: path,
       changefreq: path === '/' ? 'daily' : 'weekly',
@@ -12,7 +12,7 @@ module.exports = {
       lastmod: new Date().toISOString(),
     };
   },
-  additionalPaths: async (config) => {
+  additionalPaths: async () => {
     // In a real app, you would fetch your actual articles and categories
     return [
       {
